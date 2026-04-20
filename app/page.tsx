@@ -1107,8 +1107,7 @@ export default function Home() {
                   {TABLE_PLAYERS.filter((player) => player.key !== "you").map((player) => (
                     <button
                       key={`active-${player.key}`}
-                      onClick={() => setActiveOtherPlayer(player.key)}
-                      disabled={expectedPlayer === "you"}
+                      onClick={() => setActiveOtherPlayer(player.key as Exclude<TablePlayer, "you">)}                      disabled={expectedPlayer === "you"}
                       className={`min-h-9 rounded-lg px-2 text-xs font-semibold ${
                         activeOtherPlayer === player.key ? "bg-zinc-900 text-white" : "bg-zinc-100 text-zinc-800"
                       }`}
@@ -1124,12 +1123,12 @@ export default function Home() {
                       onClick={() => registerPlay(expectedPlayer && expectedPlayer !== "you" ? expectedPlayer : activeOtherPlayer, card.id)}
                       disabled={
                         expectedPlayer === "you" ||
-                        (expectedPlayer !== null && expectedPlayer !== "you" && !!trickCards[expectedPlayer]) ||
+                        (expectedPlayer !== null && !!trickCards[expectedPlayer]) ||
                         (expectedPlayer === null && !!trickCards[activeOtherPlayer])
                       }
                       className={`min-h-7 rounded-md border px-1 text-[11px] font-semibold ${
                         expectedPlayer === "you" ||
-                        (expectedPlayer !== null && expectedPlayer !== "you" && !!trickCards[expectedPlayer]) ||
+                        (expectedPlayer !== null && !!trickCards[expectedPlayer]) ||
                         (expectedPlayer === null && !!trickCards[activeOtherPlayer])
                           ? "cursor-not-allowed border-zinc-200 bg-zinc-200 text-zinc-500"
                           : `border-zinc-300 bg-white ${cardColorClass(card)}`
